@@ -125,7 +125,7 @@ And the second row would represent an eating of 2 pieces of apples at the Amster
 2. Preferably use **React** for the frontend
 3. The API should be a standalone server (not something like Next.js)
 4. Feel free to use **any publicly available libraries** that you are comfortable with.
-5. Configure Docker to run the **entire project**, including both the API server and the frontend application, using a Dockerfile or docker-compose. Ensure that the setup instructions are included in the HOWTO.md file.
+5. [OPTIONAL] Configure Docker to run the **entire project**, including both the API server and the frontend application, using a Dockerfile or docker-compose. Ensure that the setup instructions are included in the HOWTO.md file.
 
 ## 5. Delivery
 
