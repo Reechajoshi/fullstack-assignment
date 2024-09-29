@@ -56,7 +56,10 @@ You are free to use any out of the box server or any libraries you want; we'd su
 
 You **DO NOT** need to provide endpoints to get a list of office locations or available fruits. If you don't have the time or energy feel free to hardcode these lists, this will not be taken into consideration. The way you do hardcode them, will.
 
-### 2.3. The technical questions
+### 2.3. Automated Tests
+Ensure you provide enough automated tests to cover the key functionalities.
+
+### 2.4. The technical questions
 
 Please answer the following questions in a markdown file called **"ANSWERS.md"**.
 
