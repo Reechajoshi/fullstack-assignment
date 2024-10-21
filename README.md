@@ -43,7 +43,7 @@ The frontend must implement the following 2 features.
 > So that I can update the stock of fruit in that office in one go
 
 > As an office manager <br>
-> I want my stock update to be rejected if the total calories of all combined fruit of this update exceeds 1000kcal <br>
+> I want my stock update to be rejected if the total calories of all combined fruit of this update exceeds 250kcal <br>
 > So that the system prevents me from buying too many high-calorie fruits
 
 ### 2.2. The API
@@ -75,14 +75,6 @@ Please answer the following questions in a markdown file called **"ANSWERS.md"**
 
 ## 3. The Resources
 
-You will require some resources to complete your task. They are a database provided with this task and Fruityvice, a free API about fruit.
-
-### 3.1. Fruityvice
-
-[Fruityvice](https://www.fruityvice.com) is a free public API where you can get information on certain fruits, including their botanical and nutritional information.
-
-### 3.2. Provided Database
-
 The database that they use to keep track of fruit is provided to you as a PostgreSQL database defined in the `docker-compose.yml`
 
 To run the database, you can use the following command:
@@ -104,10 +96,10 @@ POSTGRES_PASSWORD: candidate
 It holds 3 tables
 
 - **location** - Which holds all the locations where there are offices, along with the count of people in that office
-- **fruit** - Fruits available for purchase, along with their name and Fruityvice ID
+- **fruit** - Fruits available for purchase, along with their name and caloric (kcal) value per unit.
 - **ledger** - This table holds records of all the fruits that were purchased for an office or were eaten at the office.
 
-Records with a negative integer in the **amount** column would represent the number of certain fruits that were eaten at an office, while the ones with the positive amounts would represent the purchase of those fruits at the office.
+Records with a **negative integer** in the **amount** column would represent the number of certain fruits that were eaten at an office, while the ones with the positive amounts would represent the purchase of those fruits at the office.
 
 Example:
 
@@ -116,7 +108,7 @@ Example:
 | 3        | 2           | 4     | 2018-06-09 20:00:03.629 +0200 |
 | 3        | 1           |-2     | 2017-05-09 23:33:15.233 +0200 |
 
-Where the first row represents the replenishing of apples (fruit #3), at the Berlin office by purchasing 4 pieces.
+Where the first row represents the purchase of apples (fruit #3), at the Berlin office by purchasing 4 pieces.
 
 And the second row would represent an eating of 2 pieces of apples at the Amsterdam office.
 
