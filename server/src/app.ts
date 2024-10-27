@@ -1,9 +1,12 @@
-import express from 'express';
+import * as express from 'express';
 import pool from "./db";
+import * as cors from 'cors';
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use(express.json());
+app.use(cors());
+
 
 
 app.get('/', (req, res) => {
@@ -19,7 +22,17 @@ app.get('/fruits', async (req, res) => {
     })
 });
 
+app.get('/location', async (req, res) => {
+    pool.query('SELECT * FROM location', (error, results) => {
+        if (error) {
+            console.log("Error occured while fetching location from DB.")
+        }
+        res.status(200).json(results.rows)
+    })
+});
+
 app.get('/consumption/:location/:year', async (req, res) => {
+    console.log("called...", req.params.location, req.params.year)
     pool.query(`SELECT fruit.name, extract('year' from ledger.time) as year, amount
             FROM ledger 
             INNER JOIN fruit
