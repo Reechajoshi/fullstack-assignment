@@ -34,7 +34,7 @@ const Report = () => {
                     <label htmlFor="location">
                         Location
                         <select
-                            id="animal"
+                            id="location"
                             value={location}
                             onChange={(e) => {
                                 setLocation(e.target.value);

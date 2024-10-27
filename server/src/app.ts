@@ -32,7 +32,6 @@ app.get('/location', async (req, res) => {
 });
 
 app.get('/consumption/:location/:year', async (req, res) => {
-    console.log("called...", req.params.location, req.params.year)
     pool.query(`SELECT fruit.name, extract('year' from ledger.time) as year, amount
             FROM ledger 
             INNER JOIN fruit
@@ -55,23 +54,23 @@ app.post('/purchase', async (req, res) => {
         const location = req.body.location || "";
         const fruits = req.body.fruits || {}
 
-        const totalKCal = await pool.query(`SELECT sum(kcal) from fruit where name in (${fruits.map((f) => `'${f.fruit}'`).join(',')})`);
+        const totalKCal = await pool.query(`SELECT sum(kcal) from fruit where name in (${Object.keys(fruits).map((f) => `'${f}'`).join(',')})`);
 
         if(totalKCal.rows[0].sum > 250) {
             return res.status(500).json({error: "Number of calories exceeded"})
         }
-        fruits.forEach(({fruit, quantity}) => {
+        for(let f in fruits) {
+            let quantity = fruits[f];
             pool.query(`INSERT INTO ledger ("fruit_id", "location_id", "amount", "time") values (
-                            ( SELECT id from fruit where name = '${fruit}'), ( SELECT id from location where name = '${location}' ), ${quantity}, NOW()
+                            ( SELECT id from fruit where name = '${f}'), ( SELECT id from location where name = '${location}' ), ${quantity}, NOW()
                         )`, (error, results) => {
                 if (error) {
                     console.log("ERROR occured")
                 }
                 console.log("query added..");
             })
-        });
+        }
         return res.status(200).json("added");
-
 });
 
 
