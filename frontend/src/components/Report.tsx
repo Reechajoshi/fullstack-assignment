@@ -5,7 +5,7 @@ const Report = () => {
     const [year, setYear] = useState("");
     const [allLocations, setAllLocations] = useState([]);
 
-    const [reportResults, setReportResults] = useState([]);
+    const [reportResults, setReportResults] = useState<{body: [{name: string, year: string, amount: number}] | null, message: string}>({body: null, message: ""});
     useEffect(() => {
         requestLocations()
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -23,7 +23,7 @@ const Report = () => {
             `http://localhost:3001/consumption/${location}/${year}`
         );
         const json = await res.json();
-        setReportResults(json)
+        setReportResults({body: json.body, message: json.message})
     }
 
     return (
@@ -62,8 +62,8 @@ const Report = () => {
 
                 <div>
                     <h4>Results:</h4>
-                    {reportResults.length === 0 && (<h4> No reports to show...</h4>)}
-                    {reportResults.length > 0 && reportResults.map((result: {name: string, year: string, amount: number}) => {
+                    <h4> {reportResults.message}</h4>
+                    {reportResults.body && reportResults.body.length > 0 && reportResults.body.map((result: {name: string, year: string, amount: number}) => {
                         return (<>
                             <h5>Name: {result.name} , Year: {result.year},Amount consumed: {Math.abs(result.amount)} </h5>
                         </>)
