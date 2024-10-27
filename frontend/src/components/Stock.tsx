@@ -33,22 +33,28 @@ const Stock = () => {
     }
 
     async function updateStock() {
-        const res = await fetch(
-            `http://localhost:3001/purchase`, {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({location: location, fruits: selectedFruits})
-            }
-        );
-        const json = await res.json();
-        if(res.status !== 200) {
-            alert(json.error)
+        console.log(location, selectedFruits)
+        if(!location || !selectedFruits) {
+            alert("Please fill all information")
         } else {
-            alert("added successfully")
+            const res = await fetch(
+                `http://localhost:3001/purchase`, {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({location: location, fruits: selectedFruits})
+                }
+            );
+            const json = await res.json();
+            if(res.status !== 200) {
+                alert(json.error)
+            } else {
+                alert("added successfully")
+            }
         }
+
     }
 
     async function updateFruitsQuantity(quantity: string, fruitName: string) {
